@@ -38,24 +38,16 @@
 
     <pluginRepositories>
         <pluginRepository>
-            <id>huaweicloud</id>
-            <url>https://mirrors.huaweicloud.com/repository/maven/</url>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2</url>
         </pluginRepository>
         <pluginRepository>
             <id>google-mirror</id>
             <url>https://maven-central.storage-download.googleapis.com/maven2/</url>
         </pluginRepository>
         <pluginRepository>
-            <id>central</id>
-            <url>https://repo1.maven.org/maven2</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>central-alt</id>
-            <url>https://repo.maven.apache.org/maven2</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>aliyun</id>
-            <url>https://maven.aliyun.com/repository/public</url>
+            <id>huaweicloud</id>
+            <url>https://mirrors.huaweicloud.com/repository/maven/</url>
         </pluginRepository>
     </pluginRepositories>
 
