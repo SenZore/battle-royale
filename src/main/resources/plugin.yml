@@ -1,0 +1,6 @@
+name: BattleRoyale
+main: com.senz.battleroyale.BattleRoyalePlugin
+version: 1.0.0
+author: senz
+description: Randomized loot drop battle royale for Paper 1.21.x
+api-version: 1.21
