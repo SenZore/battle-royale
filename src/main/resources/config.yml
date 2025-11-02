@@ -1,0 +1,22 @@
+minPlayers: 4
+startCountdownSeconds: 30
+maxGameTime: 1200
+borderSize: 300
+borderShrinkSpeed: 5 # blocks per minute
+minLootIntervalSeconds: 60
+maxLootIntervalSeconds: 180
+minItemsPerDrop: 1
+maxItemsPerDrop: 3
+randomEnchantments: true
+rarityWeights:
+  common: 60
+  uncommon: 30
+  rare: 10
+kits:
+  sword: true
+  mace: true
+  uhc: true
+  axe_shield: true
+  sniper: true
+  fairy: true
+  mace_elytra: true
