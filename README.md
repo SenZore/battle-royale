@@ -1,4 +1,4 @@
-# Paper 1.21.x Mini-Game Plugin Full Prompt for ChatGPT Codex
+
 
 ## Overview
 Create a Minecraft Paper 1.21.x plugin using Maven with the following features:
@@ -101,4 +101,4 @@ Create a Minecraft Paper 1.21.x plugin using Maven with the following features:
 
 ---
 
-Use this prompt as a thorough guide for ChatGPT Codex to generate the entire plugin codebase and configuration needed to build this mini-game plugin with random loot drops and dynamic game management.
+

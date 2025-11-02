@@ -120,7 +120,7 @@ public class LootManager {
 
         for (int i = 0; i < itemsToGive; i++) {
             LootKit kit = selectRandomKit();
-            ItemStack item = kit.randomItem(random);
+            ItemStack item = kit.randomItem(random).clone();
             applyRandomEnchantments(item);
             Map<Integer, ItemStack> overflow = player.getInventory().addItem(item);
             overflow.values().forEach(left -> player.getWorld().dropItemNaturally(player.getLocation(), left));
@@ -179,12 +179,12 @@ public class LootManager {
     private List<ItemStack> createSwordKit() {
         List<ItemStack> items = new ArrayList<>();
         items.add(createWeapon(Material.NETHERITE_SWORD, Map.of(
-                Enchantment.SHARPNESS, new LevelRange(3, 5),
-                Enchantment.SMITE, new LevelRange(3, 4),
+                Enchantment.DAMAGE_ALL, new LevelRange(3, 5),
+                Enchantment.DAMAGE_UNDEAD, new LevelRange(3, 4),
                 Enchantment.FIRE_ASPECT, new LevelRange(1, 2),
-                Enchantment.LOOTING, new LevelRange(3, 3),
+                Enchantment.LOOT_BONUS_MOBS, new LevelRange(3, 3),
                 Enchantment.MENDING, new LevelRange(1, 1),
-                Enchantment.UNBREAKING, new LevelRange(3, 3)
+                Enchantment.DURABILITY, new LevelRange(3, 3)
         )));
         items.add(createArmor(Material.NETHERITE_HELMET));
         items.add(createArmor(Material.NETHERITE_CHESTPLATE));
@@ -192,15 +192,15 @@ public class LootManager {
         items.add(createBoots(Material.NETHERITE_BOOTS));
         items.add(new ItemStack(Material.GOLDEN_APPLE, 4));
         items.add(createPotion(PotionType.STRENGTH, false));
-        items.add(createPotion(PotionType.SWIFTNESS, false));
+        items.add(createPotion(PotionType.SPEED, false));
         return items;
     }
 
     private List<ItemStack> createMaceKit() {
         List<ItemStack> items = new ArrayList<>();
         items.add(createWeapon(Material.MACE, Map.of(
-                Enchantment.SHARPNESS, new LevelRange(4, 5),
-                Enchantment.UNBREAKING, new LevelRange(3, 3),
+                Enchantment.DAMAGE_ALL, new LevelRange(4, 5),
+                Enchantment.DURABILITY, new LevelRange(3, 3),
                 Enchantment.KNOCKBACK, new LevelRange(1, 2),
                 Enchantment.FIRE_ASPECT, new LevelRange(1, 1),
                 Enchantment.MENDING, new LevelRange(1, 1),
@@ -212,31 +212,31 @@ public class LootManager {
         items.add(createArmor(Material.NETHERITE_LEGGINGS));
         items.add(createArmor(Material.NETHERITE_BOOTS));
         items.add(new ItemStack(Material.ENDER_PEARL, 2));
-        items.add(createPotion(PotionType.HEALING, true));
+        items.add(createPotion(PotionType.INSTANT_HEAL, true));
         return items;
     }
 
     private List<ItemStack> createUhcKit() {
         List<ItemStack> items = new ArrayList<>();
         items.add(createWeapon(Material.DIAMOND_SWORD, Map.of(
-                Enchantment.SHARPNESS, new LevelRange(2, 3),
-                Enchantment.UNBREAKING, new LevelRange(3, 3)
+                Enchantment.DAMAGE_ALL, new LevelRange(2, 3),
+                Enchantment.DURABILITY, new LevelRange(3, 3)
         )));
         items.add(createArmor(Material.DIAMOND_HELMET));
         items.add(createArmor(Material.DIAMOND_CHESTPLATE));
         items.add(createArmor(Material.DIAMOND_LEGGINGS));
         items.add(createArmor(Material.DIAMOND_BOOTS));
         items.add(createBow(Map.of(
-                Enchantment.POWER, new LevelRange(2, 4),
-                Enchantment.INFINITY, new LevelRange(1, 1),
-                Enchantment.FLAME, new LevelRange(1, 1),
-                Enchantment.UNBREAKING, new LevelRange(3, 3)
+                Enchantment.ARROW_DAMAGE, new LevelRange(2, 4),
+                Enchantment.ARROW_INFINITE, new LevelRange(1, 1),
+                Enchantment.ARROW_FIRE, new LevelRange(1, 1),
+                Enchantment.DURABILITY, new LevelRange(3, 3)
         )));
         items.add(new ItemStack(Material.ARROW, 4));
         items.add(new ItemStack(Material.LAVA_BUCKET));
         items.add(new ItemStack(Material.WATER_BUCKET));
-        items.add(createPotion(PotionType.REGENERATION, false));
-        items.add(createPotion(PotionType.HEALING, false));
+        items.add(createPotion(PotionType.REGEN, false));
+        items.add(createPotion(PotionType.INSTANT_HEAL, false));
         items.add(new ItemStack(Material.GOLDEN_APPLE, 2));
         return items;
     }
@@ -244,12 +244,12 @@ public class LootManager {
     private List<ItemStack> createAxeShieldKit() {
         List<ItemStack> items = new ArrayList<>();
         items.add(createWeapon(Material.NETHERITE_AXE, Map.of(
-                Enchantment.SHARPNESS, new LevelRange(3, 4),
-                Enchantment.UNBREAKING, new LevelRange(3, 3),
+                Enchantment.DAMAGE_ALL, new LevelRange(3, 4),
+                Enchantment.DURABILITY, new LevelRange(3, 3),
                 Enchantment.SWEEPING_EDGE, new LevelRange(2, 3)
         )));
         items.add(applyEnchantments(new ItemStack(Material.SHIELD), Map.of(
-                Enchantment.UNBREAKING, new LevelRange(3, 3)
+                Enchantment.DURABILITY, new LevelRange(3, 3)
         )));
         items.add(new ItemStack(Material.BREAD, 16));
         items.add(createPotion(PotionType.STRENGTH, false));
@@ -260,14 +260,14 @@ public class LootManager {
     private List<ItemStack> createSniperKit() {
         List<ItemStack> items = new ArrayList<>();
         items.add(createBow(Map.of(
-                Enchantment.POWER, new LevelRange(4, 4),
-                Enchantment.INFINITY, new LevelRange(1, 1),
-                Enchantment.FLAME, new LevelRange(1, 1),
-                Enchantment.UNBREAKING, new LevelRange(3, 3)
+                Enchantment.ARROW_DAMAGE, new LevelRange(4, 4),
+                Enchantment.ARROW_INFINITE, new LevelRange(1, 1),
+                Enchantment.ARROW_FIRE, new LevelRange(1, 1),
+                Enchantment.DURABILITY, new LevelRange(3, 3)
         )));
         items.add(createWeapon(Material.DIAMOND_SWORD, Map.of(
-                Enchantment.SHARPNESS, new LevelRange(3, 3),
-                Enchantment.UNBREAKING, new LevelRange(3, 3)
+                Enchantment.DAMAGE_ALL, new LevelRange(3, 3),
+                Enchantment.DURABILITY, new LevelRange(3, 3)
         )));
         items.add(createArmor(Material.DIAMOND_HELMET));
         items.add(createArmor(Material.DIAMOND_CHESTPLATE));
@@ -281,27 +281,27 @@ public class LootManager {
     private List<ItemStack> createFairyKit() {
         List<ItemStack> items = new ArrayList<>();
         items.add(applyEnchantments(new ItemStack(Material.ELYTRA), Map.of(
-                Enchantment.UNBREAKING, new LevelRange(3, 3),
+                Enchantment.DURABILITY, new LevelRange(3, 3),
                 Enchantment.MENDING, new LevelRange(1, 1)
         )));
         items.add(new ItemStack(Material.FIREWORK_ROCKET, 12));
         items.add(createWeapon(Material.DIAMOND_SWORD, Map.of(
-                Enchantment.SHARPNESS, new LevelRange(3, 3),
+                Enchantment.DAMAGE_ALL, new LevelRange(3, 3),
                 Enchantment.FIRE_ASPECT, new LevelRange(1, 1),
-                Enchantment.UNBREAKING, new LevelRange(3, 3)
+                Enchantment.DURABILITY, new LevelRange(3, 3)
         )));
         items.add(createArmor(Material.DIAMOND_HELMET));
         items.add(createArmor(Material.DIAMOND_CHESTPLATE));
         items.add(createArmor(Material.DIAMOND_LEGGINGS));
         items.add(createBoots(Material.DIAMOND_BOOTS));
-        items.add(createPotion(PotionType.SWIFTNESS, false));
+        items.add(createPotion(PotionType.SPEED, false));
         return items;
     }
 
     private List<ItemStack> createMaceElytraKit() {
         List<ItemStack> items = new ArrayList<>();
         items.add(applyEnchantments(new ItemStack(Material.ELYTRA), Map.of(
-                Enchantment.UNBREAKING, new LevelRange(3, 3),
+                Enchantment.DURABILITY, new LevelRange(3, 3),
                 Enchantment.MENDING, new LevelRange(1, 1)
         )));
         items.add(new ItemStack(Material.FIREWORK_ROCKET, 16));
@@ -309,7 +309,7 @@ public class LootManager {
                 Enchantment.DENSITY, new LevelRange(5, 5),
                 Enchantment.WIND_BURST, new LevelRange(3, 3),
                 Enchantment.MENDING, new LevelRange(1, 1),
-                Enchantment.UNBREAKING, new LevelRange(3, 3)
+                Enchantment.DURABILITY, new LevelRange(3, 3)
         )));
         items.add(createArmor(Material.NETHERITE_HELMET));
         items.add(createArmor(Material.NETHERITE_CHESTPLATE));
@@ -325,10 +325,10 @@ public class LootManager {
 
     private ItemStack createArmor(Material material) {
         Map<Enchantment, LevelRange> enchants = new HashMap<>();
-        enchants.put(Enchantment.PROTECTION, new LevelRange(3, 4));
-        enchants.put(Enchantment.UNBREAKING, new LevelRange(3, 3));
+        enchants.put(Enchantment.PROTECTION_ENVIRONMENTAL, new LevelRange(3, 4));
+        enchants.put(Enchantment.DURABILITY, new LevelRange(3, 3));
         if (material == Material.NETHERITE_BOOTS || material == Material.DIAMOND_BOOTS) {
-            enchants.put(Enchantment.FEATHER_FALLING, new LevelRange(4, 4));
+            enchants.put(Enchantment.PROTECTION_FALL, new LevelRange(4, 4));
         }
         return applyEnchantments(new ItemStack(material), enchants);
     }
@@ -356,31 +356,11 @@ public class LootManager {
             Enchantment enchantment = entry.getKey();
             LevelRange range = entry.getValue();
             int level = randomEnchantments ? randomLevel(range) : range.max();
-            if (enchantment != Enchantment.BLAST_PROTECTION) {
+            if (enchantment != Enchantment.PROTECTION_EXPLOSIONS) {
                 item.addUnsafeEnchantment(enchantment, level);
             }
         }
         return item;
-    }
-
-    private void applyRandomEnchantments(ItemStack item) {
-        if (!randomEnchantments) {
-            return;
-        }
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null || meta.hasEnchants()) {
-            return;
-        }
-        // Add a small chance of a single low-level enchantment for otherwise plain items.
-        if (random.nextDouble() < 0.15) {
-            Enchantment randomEnchant = switch (item.getType()) {
-                case BOW -> Enchantment.POWER;
-                case CROSSBOW -> Enchantment.PIERCING;
-                case SHIELD -> Enchantment.UNBREAKING;
-                default -> Enchantment.UNBREAKING;
-            };
-            item.addUnsafeEnchantment(randomEnchant, 1);
-        }
     }
 
     private int randomLevel(LevelRange range) {
@@ -392,8 +372,7 @@ public class LootManager {
 
     private record LootKit(String name, LootRarity rarity, List<ItemStack> items) {
         public ItemStack randomItem(Random random) {
-            ItemStack choice = items.get(random.nextInt(items.size()));
-            return choice.clone();
+            return items.get(random.nextInt(items.size()));
         }
     }
 
