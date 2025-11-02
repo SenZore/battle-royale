@@ -120,7 +120,7 @@ public class LootManager {
 
         for (int i = 0; i < itemsToGive; i++) {
             LootKit kit = selectRandomKit();
-            ItemStack item = kit.randomItem(random).clone();
+            ItemStack item = kit.randomItem(random);
             applyRandomEnchantments(item);
             Map<Integer, ItemStack> overflow = player.getInventory().addItem(item);
             overflow.values().forEach(left -> player.getWorld().dropItemNaturally(player.getLocation(), left));
@@ -392,7 +392,8 @@ public class LootManager {
 
     private record LootKit(String name, LootRarity rarity, List<ItemStack> items) {
         public ItemStack randomItem(Random random) {
-            return items.get(random.nextInt(items.size()));
+            ItemStack choice = items.get(random.nextInt(items.size()));
+            return choice.clone();
         }
     }
 
