@@ -1,33 +1,104 @@
-Create a Minecraft Paper 1.21.x plugin using Maven that implements a mini-game server with the following specifications:
+# Paper 1.21.x Mini-Game Plugin Full Prompt for ChatGPT Codex
 
-Single server instance that auto-generates a new world each game round.
+## Overview
+Create a Minecraft Paper 1.21.x plugin using Maven with the following features:
 
-Each world is small (smaller than Hoplite borders) with a normal border that shrinks over time to limit chunk generation and reduce CPU load.
+- Single server instance that auto-generates a new small world each game round.
+- Worlds have borders smaller than Hoplite's, shrinking over time to limit chunk loading and save CPU.
+- Maximum overworld game duration is 20 minutes.
+- Nether shares the shrinking border logic; The End is disabled.
+- Minimum players required to start is configurable via `config.yml` (default 3-5).
+- Players joining before game start are auto-ready and wait.
+- Once players exceed minimum (e.g., 5+), a new world is generated and a countdown begins.
+- Players joining *while game is starting or in-progress* become spectators.
+- No dedicated PvP arena; PvP is free with kits.
+- Every 1-5 minutes (configurable interval), each player receives 1-3 random items individually selected from a loot pool made of multiple PvP kits.
+- Kits include swords, maces, UHC gear, axe & shield, sniper kit, fairy (elytra), and special mace + elytra kits.
+- Items stack enchantments randomly from a predefined pool (no Blast Protection).
+- On death, players switch to spectator mode; no stats or data are saved after rounds.
+- Player kills broadcast a global custom death message and summon a lightning bolt (cosmetic, no damage).
+- When a round ends, all players teleport to new world spawn (X=0, Y=0, Z=0) and old world is deleted.
+- Scoreboard displays player count, time remaining, border size, loot drop countdown, kills, and other status info.
+- Optimize performance through efficient chunk management and Paper API usages.
 
-Game duration in overworld is max 20 minutes per round.
+## Configuration (`config.yml`)
+- Minimum players to start (`minPlayers`)
+- Game time limit in seconds (`maxGameTime`)
+- Border initial size and shrinking speed (`borderSize`, `borderShrinkSpeed`)
+- Loot drop interval seconds minimum and maximum (`minLootIntervalSeconds`, `maxLootIntervalSeconds`)
+- Number of items per drop (`minItemsPerDrop`, `maxItemsPerDrop`)
+- Enable/disable kits in loot pool (e.g. `enableSwordKit`, `enableMaceKit`, etc.)
+- Toggle random enchantments (`randomEnchantments`)
+- Rarity weights for loot (`rarityWeights`) to balance common vs rare drops
 
-Nether world uses the same shrinking border logic, The End world is disabled.
+## Detailed Loot Pool and Enchantments
+- Each loot drop gives random items picked individually from the following pool:
 
-Minimum players to start the game is configurable (default 3-5) via config.yml.
+### Sword Kit
+- Diamond/Netherite Sword
+- Enchants: Sharpness III-IV, Smite III-IV, Unbreaking III, Fire Aspect II, Looting III, Mending
+- Armor (Diamond/Netherite) with Protection III-IV (no Blast Protection), Feather Falling IV (boots), Unbreaking III, Mending
+- Items: Golden Apples, Strength, and Swiftness Potions
 
-When a player joins, they are marked as ready and wait for enough players.
+### Mace Kit
+- Diamond/Netherite Mace (custom item)
+- Enchants: Sharpness IV, Unbreaking III, Knockback I-II, Fire Aspect I, Mending
+- Custom: Density V, Wind Burst III
+- Armor: Similar to Sword kit, max Protection III
+- Consumables: Ender Pearls, Healing Splash Potions
 
-When players reach the configured minimum (over 5), a new small world is generated and the game begins with a countdown and big in-game title plus music indicating game start and events (like PvP toggle).
+### UHC Kit
+- Diamond Sword with Sharpness II-III, Unbreaking III
+- Full Diamond armor Protection III
+- Bow with Power II, Infinity, Flame; few arrows
+- Items: Lava & Water Buckets, Regeneration II & Healing Potions, Golden Apples
 
-No PvP arena, PvP is free with kits.
+### Axe & Shield Kit
+- Diamond/Netherite Axe with Sharpness III, Unbreaking III, Sweeping Edge III
+- Shield with Unbreaking III
+- Consumables: Bread, Strength Potions, Fire Charges
 
-Players receive random loot drops every 1-5 minutes with random items from a pool containing all normal Minecraft PvP kits (including swords, maces, UHC, enchants, etc.).
+### Sniper Kit
+- Bow with Power IV, Infinity, Flame, Unbreaking III
+- Sword with Sharpness III, Unbreaking III
+- Leather or Diamond armor Protection III
+- Consumables: Arrows, Golden Apples
 
-Player death results in spectating mode, no saving of game data or stats after each round.
+### Fairy Kit
+- Elytra with Unbreaking III, Mending
+- Fireworks Rocket (Duration 3)
+- Diamond Sword Sharpness III, Fire Aspect I, Unbreaking III
+- Diamond Armor Protection III
+- Potions of Swiftness
 
-On player kill, send a custom global death message with killer and victim names, and summon a lightning bolt strike (no damage).
+### Special Mace + Elytra Kit
+- Elytra Unbreaking III, Mending
+- Fireworks Rocket (Duration 3)
+- Mace enchant Density V, Wind Burst III
+- Diamond/Netherite Armor Protection III
+- Potion of Strength
 
-After a round finishes, teleport all players to a newly generated world spawn at coordinates (X=0, Y=0, Z=0) and delete the old world.
+## Loot Drop Mechanics (Configurable)
+- Loot drop intervals random between `minLootIntervalSeconds` and `maxLootIntervalSeconds`
+- Each player receives `minItemsPerDrop` to `maxItemsPerDrop` items per drop cycle
+- Kits and enchantments can be toggled on/off via config
+- Rarity weighting controls chance of rare vs common item drops
 
-Scoreboard displays useful real-time game status info (player count, time left, border size, loot drop countdown, kills, etc.).
+## Events & Visuals
+- Countdown, game start and PvP toggle via Minecraft titles and music
+- Lightning bolt effect on player kills (cosmetic, no damage)
+- Global kill announcements in chat with killer & victim names
 
-Use optimal coding methods and Paper API techniques to minimize server lag and CPU usage especially by limiting chunk loading outside the shrinking border.
+## Deliverables
+- Full Maven project structure for Paper 1.21.x plugin
+- Well-commented example Java classes showcasing:
+  - World generation/deletion with border shrinking
+  - Random timed individualized loot drops
+  - Spectator mode with late join handling
+  - Scoreboard display and updates
+  - Event schedule and audio-visual feedback
+- Practices optimized for server performance on Paper 1.21.x
 
-Provide clear configuration options in a config.yml for player minimum, world border sizes, game time, loot drop intervals, and other game mechanics.
+---
 
-Please generate the full Maven project structure and sample Java classes with comments demonstrating how to implement these features, using your own efficient code design and best practices for Paper plugin development on version 1.21.x.
+Use this prompt as a thorough guide for ChatGPT Codex to generate the entire plugin codebase and configuration needed to build this mini-game plugin with random loot drops and dynamic game management.
